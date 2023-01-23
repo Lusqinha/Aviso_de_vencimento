@@ -2,8 +2,7 @@ from pywhatkit import sendwhatmsg_instantly
 import csv
 from datetime import datetime
 
-hoje = datetime.now().date()
-hoje = hoje.strftime('%m/%Y')
+hoje = datetime.now().strftime('%d/%m/%Y | %H:%M:%S')
 
 print(f'Programa iniciado - mês: {hoje}')
 
@@ -26,6 +25,22 @@ def data_filter(data:str):
             data = data.removesuffix(f'/{y}')
             return data
 
+def contato_filter(contato:str):
+    ddds = [61, 62, 64, 65, 66, 67, 41, 42, 43, 44, 45, 46, 51, 53, 54, 55, 47, 48, 49]
+
+    contato = contato.replace('(', '').replace(')', '').replace('-', '').replace(' ', '').replace('.', '')
+
+    if contato == '':
+        return False
+    for ddd in ddds:
+        if contato.startswith(str(ddd)):
+            print('DDD encontrado')
+            break
+    else:
+        contato = '53' + contato
+            
+    contato = '+55' + contato
+    return contato
 
 
 file = open('arquivo_teste.csv')
@@ -53,19 +68,18 @@ for row in vencimentos_hoje:
         print(cliente)
         data_col = row[0]
         print(data_col)
-        contato = row[4].replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
-        if contato == '':
-            continue
-        elif not contato.startswith('53'):
-            contato = '53' + contato
-
-        contato = '+55' + contato
+        contato = contato_filter(row[4])
         print(contato)
-        contato = '+5553991939740'
-        produto = row[2].replace('(nÃƒÂ£o usar) ', '')
+        produto = row[2].replace('(nÃƒÂ£o usar) ', '').replace('(nÃ£o usar) ', '')
         print(produto)
         data_col = data_filter(data_col)
-        envia_mensagens(cliente, contato, produto, data_col)
+
+        with open('log.txt', 'a') as log:
+            log.write(f'{cliente} - {contato} - {data_col} - {produto} - {hoje}\n------------------------\n')
+            log.close()
+            
+
+        #envia_mensagens(cliente, contato, produto, data_col)
     except Exception as e:
         print(f'Erro ao enviar mensagem para {cliente} - {contato} - {data_col}')
 

@@ -2,3 +2,4 @@ venv/
 arquivo_teste.csv
 PyWhatKit_DB.txt
 .idea/
+log.txt
