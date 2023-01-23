@@ -43,7 +43,7 @@ def contato_filter(contato:str):
     return contato
 
 
-file = open('arquivo_teste.csv')
+file = open('vencimentos.csv')
 csv_file = csv.reader(file)
 
 vencimentos_hoje = []
