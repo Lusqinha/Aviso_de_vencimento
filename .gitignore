@@ -1,5 +1,8 @@
 venv/
+env/
 vencimentos.csv
 PyWhatKit_DB.txt
 .idea/
 log.txt
+.dist/
+__pycache__/

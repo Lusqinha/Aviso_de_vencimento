@@ -1,0 +1,36 @@
+MDBoxLayout:
+    id: box
+    orientation: 'vertical'
+    spacing: "8dp"
+    padding: "8dp"
+    adaptive_height: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+
+    MDLabel:
+        text: "Emissor de vencimentos"
+        halign: "center"
+        font_style: "H5"
+        theme_text_color: "Primary"
+        size_hint_y: None
+        height: self.texture_size[1]
+    MDTextField:
+        id: path_to_planilha
+        hint_text: "Caminho"
+        helper_text: "Insira o caminho raiz da planilha 'C:\\file.xlsx'"
+        helper_text_mode: "on_focus"
+        icon_right: "card-text-outline"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint_x: None
+        width: 300
+    MDProgressBar:
+        id: progress_bar
+        value: 0
+        size_hint_x: None
+        width: 300
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+    MDRaisedButton:
+        text: "Gerar"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        on_release: app.enviar_vencimentos(path_to_planilha.text)
