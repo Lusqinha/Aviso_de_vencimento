@@ -12,7 +12,9 @@ class EmissorDeAvisos:
 
     def __init__(self, path):
         self.hoje = datetime.now().strftime('%d/%m/%Y | %H:%M:%S')
+        self.dia = datetime.now().strftime('%d-%m-%Y')
         self.vencimentos_hoje = []
+        self.clientes_avisados = 0
         self.file = open(path)
         self.csv_file = csv.reader(self.file)
         print(f'Programa iniciado - mês: {self.hoje}')
@@ -86,19 +88,21 @@ class EmissorDeAvisos:
                 print(produto)
                 data_col = self.data_filter(data_col)
 
-                with open('../log/log.txt', 'a') as log:
+                with open(f'log/log{str(self.dia)}.txt', 'a') as log:
                     log.write(
                         f'{cliente} - {contato} - {data_col} - {produto} - {self.hoje}\n\n----------Novo-Cliente--------------\n\n')
                     log.close()
 
                 # self.envia_mensagens(cliente, contato, produto, data_col)
             except Exception as e:
-                with open('../log/log.txt', 'a') as log:
+                with open(f'log/log{str(self.dia)}.txt', 'a') as log:
                     log.write(
                         f'Erro ao enviar mensagem para {cliente} - {contato} - {data_col} - {self.hoje}\n\n----------Novo-Cliente--------------\n\n')
                     log.close()
                 print(
                     f'Erro ao enviar mensagem para {cliente} - {contato} - {data_col}')
+            self.clientes_avisados += 1
+
 
 
 if __name__ == '__main__':

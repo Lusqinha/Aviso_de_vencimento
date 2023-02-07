@@ -1,0 +1,1 @@
+C:\Users\Administrador\Documents\GIT\Aviso_de_vencimento\env\Scripts\python.exe ./main.py
